@@ -96,7 +96,7 @@ class HomeController extends Controller
     {
         return view('admin.dashboard');
     }
-    
+
     // Manage Admin Profile
     public function admin_profile_update(Request $request, $id)
     {
@@ -183,9 +183,11 @@ class HomeController extends Controller
             ->where('blocked', 0)
             ->where('deactivated', 0);
 
+
+
         // Gender Check
-        $user_ids = Member::where('gender', '!=', Auth::user()->member->gender)->pluck('user_id')->toArray();
-        $users = $users->WhereIn('id', $user_ids);
+         $user_ids = Member::where('gender', '!=', Auth::user()->member->gender)->pluck('user_id')->toArray();
+         $users = $users->WhereIn('id', $user_ids);
 
         // Ignored member and ignored by member check
         $users = $users->WhereNotIn("id", function ($query) {
@@ -291,7 +293,18 @@ class HomeController extends Controller
             }
         }
 
-        $users = $users->paginate(10);
+
+
+        $users = User::orderBy('created_at', 'desc')
+            ->where('user_type', 'member')
+            ->where('id', '!=', Auth::user()->id)
+            ->where('blocked', 0)
+            ->where('deactivated', 0);
+
+            $users = $users->paginate(10);
+
+
+
         return view('frontend.member.member_listing.index', compact('users', 'age_from', 'age_to', 'member_code', 'matital_status', 'religion_id', 'caste_id', 'sub_caste_id', 'mother_tongue', 'profession', 'country_id', 'state_id', 'city_id', 'min_height', 'max_height', 'member_type'));
     }
 

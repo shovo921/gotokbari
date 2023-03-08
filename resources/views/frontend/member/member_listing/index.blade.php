@@ -19,6 +19,7 @@
                                 </div>
                             </div>
                             <div class="mb-5">
+
                                 @foreach ($users as $key => $user)
                                     <div class="row no-gutters border border-gray-300 rounded hov-shadow-md mb-4 has-transition position-relative"
                                         id="block_id_{{ $user->id }}">
@@ -224,6 +225,8 @@
                                         </div>
                                     </div>
                                 @endforeach
+
+
                             </div>
                             <div class="aiz-pagination">
                                 {{ $users->appends(request()->input())->links() }}
