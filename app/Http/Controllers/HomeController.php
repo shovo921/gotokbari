@@ -90,7 +90,7 @@ class HomeController extends Controller
         }
         return view('frontend.user_login');
     }
-
+//git changes
 
     public function admin_dashboard()
     {
